@@ -1,0 +1,61 @@
+<template>
+    <form action="https://webto.salesforce.com/servlet/servlet.WebToCase?encoding=UTF-8" method="POST">
+
+		<input type="hidden" name="orgid" value="00D5I000002rsBJ">
+        
+		<input type="hidden" name="retURL" value="https://dreamshape-developer-edition.eu31.force.com/">
+
+    <c-custom-toast auto-close-time="5000"></c-custom-toast>
+
+      <div class="slds-m-top_medium slds-m-bottom_x-large">
+        <div class="slds-p-around_medium lgc-bg">
+
+          <div class="demo-only slds-m-bottom_medium" style="padding:0.5rem;background:#16325c">
+            <div class="slds-text-color_inverse">Requirement fields</div>
+          </div>
+
+          <lightning-input type="text" label="Name" name="name" max-length="20" value={name} onchange={validateIputs} required=""></lightning-input>
+          <lightning-input type="email" label="Email address" name="email" max-length="20" value={email} onchange={validateIputs} required=""></lightning-input>
+          <lightning-input type="tel" label="Phone" name="phone" pattern="[0-9]{3}[0-9]{3}[0-9]{3}" value={phone} required="" onchange={validateIputs}></lightning-input>
+          
+          <div class="demo-only slds-m-top_medium slds-m-bottom_medium" style="padding:0.5rem;background:#16325c">
+            <div class="slds-text-color_inverse">Additional fields</div>
+          </div>
+
+          <lightning-combobox
+          name="subject"
+          label="Subject"
+          placeholder="Select a topic "
+          options={options}
+          onchange={handleSubjectChange}
+          value={subject}>
+          
+          </lightning-combobox>
+          
+          <lightning-input type="text" label="Description" name="description" placeholder= "Why u want to contact ? " value={description}  max-length="50"></lightning-input>
+         
+          <input type="hidden" name="subject" value={subject}>
+          <input type="hidden" name="description" value={description}>
+
+        </div>
+      </div>
+
+    <template if:true={showButton}>
+      <div class = "slds-align_absolute-center">
+        <lightning-button type="submit" name="Send" variant="brand-outline" label="Send"
+        title="Click to send" class="slds-m-around_medium" onclick={showToast}>
+        </lightning-button>
+      </div>
+    </template>
+
+    <template if:false={showButton}>
+      <div class = "slds-align_absolute-center">
+        <lightning-button type="submit" name="Send" variant="brand-outline" disabled="true" label="Send"
+        title="Click to send" class="slds-m-around_medium" onclick={showToast}>
+        </lightning-button>
+      </div>
+    </template>
+
+	  </form>
+    
+</template>

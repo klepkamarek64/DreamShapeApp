@@ -1,0 +1,146 @@
+<template>
+    <div class="slds-m-top_medium slds-m-bottom_x-large">
+
+        <h2 class="slds-text-heading_large slds-m-bottom_x-large">
+            <b> Enter your details</b>
+        </h2>
+
+        <div class="demo-only" style="padding:0.5rem;background:#16325c">
+            <div class="slds-text-color_inverse">Gender</div>
+        </div>
+        <div>
+            <lightning-radio-group name="genderRadioGroup"
+            options={genderRadioOptions}
+            type="radio"
+            onchange={genderRadioChange}>
+            </lightning-radio-group>
+        </div>
+
+        <lightning-layout>
+
+            <lightning-layout-item size="4">
+                <div class="demo-only" style="padding:0.5rem;background:#16325c">
+                    <div class="slds-text-color_inverse">Weight</div>
+                    <lightning-input type="number" value={weight} name="weight" onchange={handleChange} max-length="4"></lightning-input>
+                </div>
+            </lightning-layout-item>
+
+            <lightning-layout-item size="4">
+                <div class="demo-only" style="padding:0.5rem;background:#16325c">
+                    <div class="slds-text-color_inverse">Height</div>
+                    <lightning-input type="number" value={height} name="height" onchange={handleChange} max-length="4"></lightning-input>
+                </div>
+            </lightning-layout-item>
+
+            <lightning-layout-item size="4">
+                <div class="demo-only" style="padding:0.5rem;background:#16325c">
+                    <div class="slds-text-color_inverse">Age</div>
+                    <lightning-input type="number" value={age} name="age" onchange={handleChange} max-length="4"></lightning-input>
+                </div>
+            </lightning-layout-item>    
+                    
+        </lightning-layout>
+        
+        <div class="demo-only slds-m-top_medium" style="padding:0.5rem;background:#16325c">
+            <div class="slds-text-color_inverse">Select your physical activity</div>
+        </div>
+        <div>
+            <lightning-radio-group name="activityRadioGroup"
+            options={activityRadioOptions}
+            type="radio"
+            onchange={activityRadioChange}>
+            </lightning-radio-group>
+        </div>
+
+        <div class="demo-only" style="padding:0.5rem;background:#16325c">
+            <div class="slds-text-color_inverse">A goal to be achieved</div>
+        </div>  
+        <div>
+            <lightning-radio-group name="achieveRadioGroup"
+            options={achieveRadioOptions}
+            type="radio"
+            onchange={achieveRadioChange}>
+            </lightning-radio-group>
+        </div>
+
+    </div>
+
+    <div class="slds-align_absolute-center">
+      <lightning-button variant="brand-outline" label="Calculate" title="Primary action" onclick={handleCalculateClick}></lightning-button>
+    </div>
+
+    <template if:true={isModalOpen}>
+
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close"
+                            alternative-text="close"
+                            variant="inverse"
+                            size="small" ></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Your caloric requirement</h2>
+                </header>
+
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">     
+                        <div class="slds-align_absolute-center"><h2><p><b>{sum} KCAL </b></p></h2></div>  
+                </div>
+
+                <footer class="slds-modal__footer">
+                    <h2 class="slds-text-heading_medium slds-hyphenate slds-align_absolute-center slds-p-bottom_large">Would you like to know your basic macronutrients in your diet?</h2>
+                    <button class="slds-button slds-button_brand" onclick={submitDetails} title="No, thank you">No, thank you</button>
+                    <button class="slds-button slds-button_brand slds-float_left" onclick={handleMacroClick} title="Show me the macro">Yes, show me the macro</button>
+                </footer>
+
+            </div>
+        </section>
+
+        <div class="slds-backdrop slds-backdrop_open"></div>
+        
+    </template>
+
+    <template if:true={isMakroModalOpen}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-03" aria-modal="true" aria-describedby="modal-content-id-3" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeMakroModal}>
+                        <lightning-icon icon-name="utility:close"
+                            alternative-text="close"
+                            variant="inverse"
+                            size="small" ></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="modal-heading-03" class="slds-text-heading_medium slds-hyphenate">With caloric demand {sum} KCAL you should eat :</h2>
+                </header>
+
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-3">       
+                    <lightning-layout>
+                        <lightning-layout-item size="5">
+                            <div><h2><b>Proteins {proteins} G </b></h2></div>
+                        </lightning-layout-item> 
+
+                        <lightning-layout-item size="5">
+                            <div><h2><b>Carbs {carbs} G </b></h2></div>
+                        </lightning-layout-item> 
+
+                            <lightning-layout-item size="5">
+                            <div><h2><b>Fats {fats} G </b></h2></div>    
+                        </lightning-layout-item> 
+                    </lightning-layout>              
+                
+                </div>
+
+                <footer class="slds-modal__footer">   
+                    <button class="slds-button slds-button_brand" onclick={submitMakroDetails} title="Ok">Ok</button>
+                </footer>
+
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+
+</template>

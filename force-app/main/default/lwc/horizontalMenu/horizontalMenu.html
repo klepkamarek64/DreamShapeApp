@@ -1,0 +1,26 @@
+<template>
+    <lightning-card>
+      <div>
+        <template if:true={allMenus}>
+            <ul class="slds-tabs_default__nav" role="tablist">
+              <div class="slds-col slds-p-around--small">
+                <div class="slds-tabs_default__item" data-name='Home' onclick={navigateToHomePage} style="cursor: pointer;">
+                  Home
+                </div>
+            </div>
+            <template for:each={allMenus} for:item="men">
+                 <div key={men.Target} class="slds-col slds-p-around--small">
+                    <li key={men.Target} class="slds-tabs_default__item" role="presentation">
+                      <div data-name={men.Target}  onclick={navigateToPage} style="cursor: pointer;">
+                        {men.Label}
+                      </div>
+                    </li>
+                  </div>
+            </template>
+            </ul>
+        </template>
+      </div>
+    </lightning-card>
+  </template>
+
+  

@@ -1,0 +1,15 @@
+<template>
+    <lightning-card title="HomePage" icon-name="custom:custom14">
+      <div>
+        <template if:true={allArticles}>
+            <template for:each={allArticles} for:item="art">
+              <p key={art.Id}>
+                <lightning-formatted-rich-text value={art.Article__c}>
+
+                </lightning-formatted-rich-text>
+              </p>
+            </template>
+        </template>
+      </div>
+    </lightning-card>
+  </template>
