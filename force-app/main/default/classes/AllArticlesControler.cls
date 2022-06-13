@@ -4,7 +4,7 @@ public without sharing class AllArticlesControler {
     public static Map<String, Knowledge__kav> getAllKnowledgeArticles() {
 
         Map<String, Knowledge__Kav> artMap = new Map<String, Knowledge__Kav>();
-
+        
         List<Knowledge__kav> artList = new List<Knowledge__kav>([SELECT Title, Article__c, UrlName FROM Knowledge__kav]);
         for(Knowledge__Kav k : artList) {
             artMap.put(k.Title, k);

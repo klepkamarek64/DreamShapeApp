@@ -73,7 +73,7 @@ export default class CalorieCalculator extends LightningElement {
     isMakroModalOpen = false;
 
     handleMacroClick() {
-        makroDiet({calculatedDiet:this.sum, weight:this.weight})
+        makroDiet({calculateCaloricRequirement:this.sum, weight:this.weight})
         .then(calculeteMakro =>{
 
             this.closeModal();
